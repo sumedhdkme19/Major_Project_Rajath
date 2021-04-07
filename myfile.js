@@ -35,17 +35,21 @@ function student_find_activities(student_ID) {
     var total_days=0;
     console.log("Student ID: "+student_ID+'\n');
     lrs=new LineReaderSync("drive_activity_files.txt")
-    while(lrs){
-            let line = lrs.readline()
-            console.log(typeof(line));
-            stu_doc_id=line.split('***')[0];
-            stu_email_id=line.split('***')[1];
-            stu_doc_name=line.split('***')[2];
-            stu_timestamps_people_id=line.split('***')[3];
-            if(line.includes(student_ID)) {
-                console.log(stu_doc_name);
-                total_days=days_worked(stu_timestamps_people_id,student_ID,total_days);
-                console.log("Total days worked: "+total_days+'\n');
+    while(true){
+            var line = lrs.readline();
+            if(line === null){
+                break;
+            }
+            else{
+                stu_doc_id=line.split('***')[0];
+                stu_email_id=line.split('***')[1];
+                stu_doc_name=line.split('***')[2];
+                stu_timestamps_people_id=line.split('***')[3];
+                if(line.includes(student_ID)) {
+                    console.log(stu_doc_name);
+                    total_days=days_worked(stu_timestamps_people_id,student_ID,total_days);
+                    console.log("Total days worked: "+total_days+'\n');
+                }
             }
 
     }
